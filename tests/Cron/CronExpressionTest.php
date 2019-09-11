@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Cron\Tests;
 
 use Cron\CronExpression;
+use Cron\MinutesField;
 use Cron\MonthField;
+use Cron\SecondField;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -582,8 +584,23 @@ class CronExpressionTest extends TestCase
     public function testFieldPositionIsHumanAdjusted(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('6 is not a valid position');
+        $this->expectExceptionMessage('7 is not a valid position');
 
-        $e = CronExpression::factory('0 * * * * ? *');
+        $e = CronExpression::factory('0 * * * * * ? *');
+    }
+
+    /**
+     * Test expression using second
+     */
+    public function testSecondsExpressions():void
+    {
+        $e = CronExpression::factory('* * * * * */5');
+        $this->assertTrue($e->isDue(new DateTime('2014-04-07 00:00:05'), null, true));
+
+        $e = CronExpression::factory('* * * * * 0,5,10,20');
+        $this->assertSame('2018-04-07 00:00:20',
+            $e->getNextRunDate('2018-04-07 00:00:13', 0, false, null, false)
+                ->format('Y-m-d H:i:s')
+        );
     }
 }

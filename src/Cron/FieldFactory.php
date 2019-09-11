@@ -51,6 +51,10 @@ class FieldFactory
                     $this->fields[$position] = new DayOfWeekField();
 
                     break;
+                case 5:
+                    $this->fields[$position] = new SecondField();
+
+                    break;
                 default:
                     throw new InvalidArgumentException(
                         ($position + 1) . ' is not a valid position'
