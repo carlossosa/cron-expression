@@ -602,5 +602,11 @@ class CronExpressionTest extends TestCase
             $e->getNextRunDate('2018-04-07 00:00:13', 0, false, null, false)
                 ->format('Y-m-d H:i:s')
         );
+
+        $e = CronExpression::factory('* * * * * */5');
+        $this->assertSame('2019-09-16 11:00:00',
+            $e->getNextRunDate('2019-09-16 10:59:59', 0, false, null, false)
+                ->format('Y-m-d H:i:s')
+        );
     }
 }

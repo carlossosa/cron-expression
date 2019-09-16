@@ -67,7 +67,7 @@ class SecondField extends AbstractField
 
         if ((!$invert && $current_second >= $seconds[$position]) || ($invert && $current_second <= $seconds[$position])) {
             $date = $date->modify(($invert ? '-' : '+') . '1 minute');
-            $date = $date->setTime((int) $date->format('H'), (int) $date->format('H'),$invert ? 59 : 0);
+            $date = $date->setTime((int) $date->format('H'), (int) $date->format('i'),$invert ? 59 : 0);
         } else {
             $date = $date->setTime((int) $date->format('H'), (int) $date->format('i'), (int) $seconds[$position]);
         }
